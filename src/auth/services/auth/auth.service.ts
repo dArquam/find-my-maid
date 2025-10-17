@@ -5,12 +5,13 @@ import { Worker } from '../../../workers/entities/worker.entity';
 import { MongoRepository } from 'typeorm';
 import { randomBytes, scrypt as _scrypt} from 'crypto';
 import { promisify } from 'util';
+import { JwtService } from '@nestjs/jwt';
 
 const  scrypt = promisify(_scrypt); //convert callback based function to promise based function
 
 @Injectable()
 export class AuthService {
-    constructor(@InjectRepository(Worker) private userRepository: MongoRepository<Worker>) {
+    constructor(@InjectRepository(Worker) private userRepository: MongoRepository<Worker>, private jwtService: JwtService,) {
     }
 
     async createWorker(body: CreateWorkerDto){
@@ -39,9 +40,11 @@ export class AuthService {
         if(storedHash !== hash.toString('hex')){
             throw new ConflictException('Invalid credentials');
         }
-        return worker;
 
-
+        const payload = { worker: worker };
+        return {
+            access_token: await this.jwtService.signAsync(payload),
+        };
+    
     }
-
 }

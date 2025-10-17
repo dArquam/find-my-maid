@@ -5,12 +5,13 @@ import { Role } from '../shared/common.enum';
 import { Serialize } from '../shared/interceptors/serialize-response.interceptor';
 import { WorkerDto } from 'src/workers/dtos/workers.dto';
 import { SignInDto } from '../shared/dtos/sign-in.dto';
-@Serialize(WorkerDto)
+
 @Controller('auth')
 export class AuthController {
     
     constructor(private authService: AuthService) {}
 
+    @Serialize(WorkerDto)
     @Post('/worker/signup/:role')
     signup(@Body() body: CreateWorkerDto, @Param('role') params: Role) {
         if(params === Role.Worker){

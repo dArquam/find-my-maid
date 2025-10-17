@@ -60,5 +60,16 @@ Incoming Request
 Response Sent
 
 
+#### JWT
+🧠 JWT = JSON Web Token
+JWT is used for stateless authentication — no session stored on the server.
+When a user logs in:
+You verify credentials (email + password)
+You sign a JWT with user data (userId, role, etc.)
+The client stores it (usually in localStorage or cookies)
+For every request, the client sends the token in the Authorization header
+The server verifies it with a secret key and extracts user info.
+
+
 
 
