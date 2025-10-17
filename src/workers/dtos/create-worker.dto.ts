@@ -1,4 +1,4 @@
-import { IsString, IsInt, IsOptional, IsEmail, Min, Max, IsEnum, MaxLength, IsPhoneNumber, IsArray, IsNotEmpty, ArrayNotEmpty } from 'class-validator';
+import { IsString, IsInt, IsOptional, IsEmail, Min, Max, IsEnum, MaxLength, IsPhoneNumber, IsArray, IsNotEmpty, ArrayNotEmpty, MinLength } from 'class-validator';
 import { Gender } from 'src/shared/common.enum';
 export class CreateWorkerDto {
     @IsString()
@@ -19,6 +19,11 @@ export class CreateWorkerDto {
 
     @IsEmail()
     email: string;
+
+    @IsString()
+    @MinLength(6)
+    @IsNotEmpty()
+    password: string;
 
     @IsPhoneNumber("IN")
     phone: string;

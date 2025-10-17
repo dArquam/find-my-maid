@@ -13,7 +13,9 @@ export class UsersService {
     async find(body: FindMaidsDto){
        const workers = await this.workerRepository.find({
             where: {
-                skills: { $in: body.works }
+                skills: { $in: body.works },
+                address: body.location
+                
             }
        });
        console.log('workers', workers);

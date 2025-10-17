@@ -21,4 +21,44 @@ npm install --save-dev cross-env
   }
 }
 
+#####
+Flow of Nest
+Request
+Middlewares (Cookie Session Middleware)
+Guards
+Interceptor --- working on request
+RequestHandler
+Interceptor --- working on response
+Response
+
+| Order | Component                 | Description                              |
+| ----- | ------------------------- | ---------------------------------------- |
+| 1     | **Middleware**            | Pre-route global logic                   |
+| 2     | **Guards**                | Authorization & access control           |
+| 3     | **Interceptors (Before)** | Request transformation or logging        |
+| 4     | **Pipes**                 | Validation & data transformation         |
+| 5     | **Controller / Service**  | Business logic                           |
+| 6     | **Interceptors (After)**  | Response transformation                  |
+| 7     | **Exception Filters**     | Handle thrown errors gracefully          |
+| ⚙️    | **Decorators**            | Define metadata, not executed at runtime |
+
+┌──────────────────────────────────────────────┐
+│                Decorators                    │
+│ (Run at application startup, register meta)  │
+└──────────────────────────────────────────────┘
+                           │
+                           ▼
+Incoming Request
+  │
+  ├─► 1. Middleware
+  ├─► 2. Guards
+  ├─► 3. Interceptors (before)
+  ├─► 4. Pipes
+  ├─► 5. Controller / Service
+  ├─► 6. Interceptors (after)
+  └─► 7. Exception Filters (if error)
+Response Sent
+
+
+
 

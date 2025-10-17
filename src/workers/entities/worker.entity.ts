@@ -1,7 +1,8 @@
 import { Gender } from 'src/shared/common.enum';
-import { Entity, Column, CreateDateColumn, UpdateDateColumn, ObjectIdColumn } from 'typeorm';
+import { Entity, Column, CreateDateColumn, UpdateDateColumn, ObjectIdColumn, Index } from 'typeorm';
 
 @Entity('workers')
+@Index(['email'], { unique: true })
 export class Worker {
     @ObjectIdColumn()
     _id: number;
@@ -32,6 +33,9 @@ export class Worker {
 
     @Column({ type: 'boolean', default: true })
     isActive: boolean;
+
+    @Column()
+    password: string;
 
     @CreateDateColumn()
     createdAt: Date;

@@ -7,4 +7,8 @@ export class FindMaidsDto {
     @IsString({ each: true })
     @IsNotEmpty({ each: true })
     works: string[]
+
+    @IsString()
+    @IsNotEmpty()
+    location: string
 }
