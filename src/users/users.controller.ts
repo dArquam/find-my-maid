@@ -1,7 +1,11 @@
-import { Controller, Post, Param, Query, Body } from '@nestjs/common';
+import { Controller, Post, Param, Query, Body, UseGuards } from '@nestjs/common';
 import { FindMaidsDto } from './dtos/find-maids.dto';
 import { UsersService } from './services/users/users.service';
+import { AuthGuard } from '@nestjs/passport';
+import { Serialize } from '../shared/interceptors/serialize-response.interceptor';
+import { WorkerDto } from '../workers/dtos/workers.dto';
 
+ @UseGuards(AuthGuard('jwt'))
 @Controller('users')
 export class UsersController {
 
@@ -9,6 +13,7 @@ export class UsersController {
     }
 
     @Post('/find-maids')
+    @Serialize(WorkerDto)
     findAll(@Body() body: FindMaidsDto) {
         console.log('body', body);
         
